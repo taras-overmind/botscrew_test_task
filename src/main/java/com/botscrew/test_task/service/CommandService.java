@@ -1,12 +1,9 @@
 package com.botscrew.test_task.service;
 
-import com.botscrew.test_task.model.Department;
-import com.botscrew.test_task.model.Lector;
 import com.botscrew.test_task.repository.DepartmentRepository;
 import com.botscrew.test_task.repository.LectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,19 +42,15 @@ public class CommandService {
     public String showAverageSalary(String department_name) {
         if (departmentRepository.getLectorNamesByDepartmentName(department_name).isEmpty()) {
             return "No employees";
-        } else if (departmentRepository.findDepartmentByName(department_name) != null)
+        } else
             return "The average salary of " + department_name + " is " + departmentRepository.getAverageSalaryByDepartmentName(department_name);
-        else
-            return "No such department";
     }
 
     public String showCountOfEmployees(String department_name) {
         if (departmentRepository.getLectorNamesByDepartmentName(department_name).isEmpty())
             return "No employees";
-        else if (departmentRepository.findDepartmentByName(department_name) != null)
-            return departmentRepository.countEmployeesByDepartmentName(department_name);
         else
-            return "No such department";
+            return departmentRepository.countEmployeesByDepartmentName(department_name);
     }
 
     public String globalSearch(String template) {
