@@ -9,10 +9,9 @@ import java.util.List;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
-    @Override
-    List<Department> findAll();
 
     Department findDepartmentByName(String name);
+
     @Query(value = "select department.head_of_department_name\n" +
             "from department\n" +
             "where department.name=?1", nativeQuery = true)
@@ -47,4 +46,10 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
             "join public.department d on d.id = ld.department_id\n" +
             "WHERE d.name=?1", nativeQuery = true)
     List<String> getLectorNamesByDepartmentName(String department_name);
+
+    @Query(value = "select head_of_department_name from department", nativeQuery = true)
+    List<String> getHeadOfDepartmentsNames();
+
+    @Query(value = "select department.name from department", nativeQuery = true)
+    List<String> getDepartmentNames();
 }

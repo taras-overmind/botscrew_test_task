@@ -60,20 +60,19 @@ public class CommandService {
             return "No such department";
     }
 
-    @Transactional
     public String globalSearch(String template) {
         StringBuilder searchResult = new StringBuilder();
-        var lectors = lectorRepository.findAll().stream().map(Lector::getName)
+        var lectors = lectorRepository.getLectorNames().stream()
                 .filter(x -> x.toLowerCase().contains(template)).toList();
         searchResult.append("Lectors: ");
         appendResults(lectors, searchResult);
         searchResult.append("\n");
-        var heads_of_departments = departmentRepository.findAll().stream().map(Department::getHead_of_department_name)
+        var heads_of_departments = departmentRepository.getHeadOfDepartmentsNames().stream()
                 .filter(x -> x.toLowerCase().contains(template)).toList();
         searchResult.append("Heads of department: ");
         appendResults(heads_of_departments, searchResult);
         searchResult.append("\n");
-        var departments = departmentRepository.findAll().stream().map(Department::getName)
+        var departments = departmentRepository.getDepartmentNames().stream()
                 .filter(x -> x.toLowerCase().contains(template)).toList();
         searchResult.append("Departments: ");
         appendResults(departments, searchResult);
